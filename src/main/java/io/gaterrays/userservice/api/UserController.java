@@ -1,5 +1,6 @@
 package io.gaterrays.userservice.api;
 
+
 import io.gaterrays.userservice.domain.Role;
 import io.gaterrays.userservice.domain.User;
 import io.gaterrays.userservice.service.UserService;
@@ -9,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.*;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+
+
 
 @RestController @RequiredArgsConstructor
 
@@ -36,7 +37,7 @@ public class UserController {
         return ResponseEntity.ok().body(user);
     }
 
-    @PostMapping
+    @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody User user){
         if(userService.findByUsername(user.getUsername())){
             return new  ResponseEntity<>(Collections.singletonMap("response","Este username ya esta registrado"),HttpStatus.BAD_REQUEST);
@@ -54,6 +55,8 @@ public class UserController {
         userService.addRoleToUser(form.getUsername(),form.getRolename());
         return new ResponseEntity<>(Collections.singletonMap("response","rol agregado al usuario"),HttpStatus.OK);
     }
+
+
 
 }
 @Data
